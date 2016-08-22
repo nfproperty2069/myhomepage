@@ -15,12 +15,12 @@ app.set('view engine', 'ejs');
 var p;
 app.get('/', function(request, response) {
     var count;
+    console.log('client ip : '+request.ip);
     fs.readFile('stats', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
         }
         count = data;
-        console.log(count);
 
         count++;
         p = count;
