@@ -6,7 +6,7 @@ var moment = require('moment');
 
 var startTime = moment();
 startTime = startTime.add(5,'hours').add(30,'minutes');
-startTime = startTime.toDate();
+startTime = startTime.format('YYYY-MM-DD HH:mm');
 
 var circularJSON = require('circular-json');
 
@@ -21,8 +21,6 @@ app.use(opbeat.middleware.express());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 var p;
-
-console.log(startTime);
 
 app.get('/', function(request, response) {
     var count;
