@@ -1,15 +1,16 @@
 var opbeat = require('opbeat').start();
-var geoip = require('geoip-lite');
-
-var ip = "106.215.130.108";
-var geo = geoip.lookup(ip);
-
-console.log(geo);
 
 var express = require('express');
 var fs = require('fs');
 var app = express();
 var circularJSON = require('circular-json');
+
+var geoip = require('geoip-lite');
+
+var ip = "207.97.227.239";
+var geo = geoip.lookup(ip);
+
+console.log(geo);
 
 app.set('port', (process.env.PORT || 5000));
 
