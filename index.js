@@ -21,7 +21,7 @@ app.get('/', function(request, response) {
     var ip = request.headers['x-forwarded-for'];
     var geo = geoip.lookup(ip);
     console.log('client ip : '+ip);
-    console.log('location : '+JSON.stringify(geo));
+    console.log('client city : '+geo.city);
     fs.readFile('stats', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
