@@ -7,10 +7,8 @@ var circularJSON = require('circular-json');
 
 var geoip = require('geoip-lite');
 
-var ip = "207.97.227.239";
-var geo = geoip.lookup(ip);
+//var ip = "207.97.227.239";
 
-console.log(geo);
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -23,7 +21,10 @@ app.set('view engine', 'ejs');
 var p;
 app.get('/', function(request, response) {
     var count;
-    console.log('client ip : '+request.headers['x-forwarded-for']);
+    var ip = request.headers['x-forwarded-for'];
+    var geo = geoip.lookup(ip);
+    console.log('client ip : '+ip);
+    console.log('location : '+geo);
     fs.readFile('stats', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
