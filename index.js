@@ -1,14 +1,10 @@
 var opbeat = require('opbeat').start();
-
 var express = require('express');
 var fs = require('fs');
 var app = express();
 var circularJSON = require('circular-json');
 
 var geoip = require('geoip-lite');
-
-//var ip = "207.97.227.239";
-
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -24,7 +20,7 @@ app.get('/', function(request, response) {
     var ip = request.headers['x-forwarded-for'];
     var geo = geoip.lookup(ip);
     console.log('client ip : '+ip);
-    console.log('location : '+geo);
+    console.log('location : '+JSON.stringify(geo,null,2));
     fs.readFile('stats', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
