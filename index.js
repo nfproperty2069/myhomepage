@@ -17,10 +17,11 @@ app.set('view engine', 'ejs');
 var p;
 app.get('/', function(request, response) {
     var count;
+    var myip = '106.215.130.108';
     var ip = request.headers['x-forwarded-for'];
     var geo = geoip.lookup(ip);
     console.log('client ip : '+ip);
-    console.log('location : '+JSON.stringify(geo,null,2));
+    console.log('location : '+JSON.stringify(geo));
     fs.readFile('stats', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
