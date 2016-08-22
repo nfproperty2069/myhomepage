@@ -2,6 +2,9 @@ var opbeat = require('opbeat').start();
 var express = require('express');
 var fs = require('fs');
 var app = express();
+var moment = require('moment');
+
+var startTime = moment().format();
 var circularJSON = require('circular-json');
 
 var geoip = require('geoip-lite');
@@ -15,13 +18,18 @@ app.use(opbeat.middleware.express());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 var p;
+
+console.log(startTime);
+
 app.get('/', function(request, response) {
     var count;
     var myip = '106.215.130.108';
     var ip = request.headers['x-forwarded-for'];
     var geo = geoip.lookup(ip);
     console.log('client ip : '+ip);
-    console.log('client city : '+geo.city);
+    if(geo != null) {
+        console.log('client city : ' + geo.city);
+    }
     fs.readFile('stats', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
@@ -36,7 +44,8 @@ app.get('/', function(request, response) {
             }
         } );
         response.render('pages/index', {
-            cnt: p
+            cnt: p,
+            start : startTime
         });
     });
 
