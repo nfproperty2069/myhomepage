@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 var p;
 app.get('/', function(request, response) {
     var count;
-    console.log('client ip : '+request.headers.host);
+    console.log('client ip : '+request.rawHeaders[1]);
     fs.readFile('stats', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
