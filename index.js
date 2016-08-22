@@ -13,13 +13,14 @@ app.use(opbeat.middleware.express());
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 var p;
-app.get('/', function(request, response, next) {
+app.get('/', function(request, response) {
     var count;
     fs.readFile('stats', 'utf8', function (err,data) {
         if (err) {
             return console.log(err);
         }
         count = data;
+        console.log(count);
 
         count++;
         p = count;
@@ -28,10 +29,11 @@ app.get('/', function(request, response, next) {
                 return console.log(err);
             }
         } );
+        response.render('pages/index', {
+            cnt: p
+        });
     });
-    response.render('pages/index', {
-        cnt: p
-    });
+
 });
 
 // app.get('/', function(request, response) {
