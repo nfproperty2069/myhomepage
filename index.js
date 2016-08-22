@@ -4,7 +4,10 @@ var fs = require('fs');
 var app = express();
 var moment = require('moment');
 
-var startTime = moment().format();
+var startTime = moment();
+startTime = startTime.add(5,'hours').add(30,'minutes');
+startTime = startTime.toDate();
+
 var circularJSON = require('circular-json');
 
 var geoip = require('geoip-lite');
