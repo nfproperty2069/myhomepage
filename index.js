@@ -1,4 +1,10 @@
 var opbeat = require('opbeat').start();
+var geoip = require('geoip-lite');
+
+var ip = "106.215.130.108";
+var geo = geoip.lookup(ip);
+
+console.log(geo);
 
 var express = require('express');
 var fs = require('fs');
