@@ -14,11 +14,11 @@ var geoip = require('geoip-lite');
 
 app.set('port', (process.env.PORT || 5000));
 
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+//var bodyParser = require('body-parser');
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded());
 // in latest body-parser use like below.
-app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(opbeat.middleware.express());
 
