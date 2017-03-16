@@ -4,6 +4,12 @@ var fs = require('fs');
 var app = express();
 var moment = require('moment');
 var bodyParser = require('body-parser');
+var Nexmo = require('nexmo');
+var nexmo = new Nexmo({
+  apiKey: "695cef78",
+  apiSecret: "e405b5f165ffc160"
+});
+
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://root:123456@ds131900.mlab.com:31900/mydb';
 
@@ -97,6 +103,16 @@ app.post("/sendresponse",function(req,res){
     collection.insert(body, function(err, result) {
 
       console.log('saved');
+      nexmo.message.sendSms(
+          '9971916627','919971916627', 'Hello Deep, 1 more entry came from '+body.firstname,
+    (err, responseData) => {
+      if (err) {
+        console.log('error : '+err);
+      } else {
+        console.log(' res data '+JSON.stringify(responseData,null,2));
+      }
+    }
+ );
         db.close();
       });
   }
@@ -110,4 +126,3 @@ app.post("/sendresponse",function(req,res){
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
-
