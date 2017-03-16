@@ -3,6 +3,9 @@ var express = require('express');
 var fs = require('fs');
 var app = express();
 var moment = require('moment');
+var bodyParser = require('body-parser');
+var MongoClient = require('mongodb').MongoClient;
+var url = 'mongodb://root:123456@ds131900.mlab.com:31900/mydb';
 
 var startTime = moment();
 startTime = startTime.add(5,'hours').add(30,'minutes');
@@ -18,7 +21,7 @@ app.set('port', (process.env.PORT || 5000));
 //app.use(bodyParser.json());
 //app.use(bodyParser.urlencoded());
 // in latest body-parser use like below.
-//app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(opbeat.middleware.express());
 
@@ -75,32 +78,33 @@ app.get("/download",function(req,res){
 
 app.post("/sendresponse",function(req,res){
 
+    console.log(req);
     var body = req.body;
-    body.time = new Date().toString();
+  //  body.time = new Date().toString();
 
-    console.log(body);
+    console.log('body  -- '+JSON.stringify(body,null,2));
 
-    fs.appendFile(__dirname + '/public/files/coming projects',JSON.stringify(body,null,2), function (err,data) {
+    MongoClient.connect(url, function(err, db) {
+    if(err)
+    {
+      throw err;
+    }
+    else
+    {
+    console.log("Connected correctly to server");
+    var collection = db.collection('users');
 
-        if(err) throw err;
+    collection.insert(body, function(err, result) {
 
-      // res.write(
-      //     "<!DOCTYPE html>" +
-      //     "<html lang='en' dir='ltr'>" +
-      //     "<head>" +
-      //     "<met charset='utf-8'>" +
-      //     "<title>Hola Mundo</title>" +
-      //     "</head>" +
-      //     "<body>" +
-      //     "<script type='text/javascript'>alert('Hello World')</script>" +
-      //     "</body>" +
-      //     "</html>");
-        //res.redirect('/');
-    //    res.end();
-        res.redirect('/');
+      console.log('saved');
+        db.close();
+      });
+  }
 
+    res.redirect('/');
 
-    })
+  });
+
 });
 
 app.listen(app.get('port'), function() {
