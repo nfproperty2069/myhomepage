@@ -86,7 +86,7 @@ app.post("/sendresponse",function(req,res){
 
     console.log(req);
     var body = req.body;
-  //  body.time = new Date().toString();
+    body.time = new Date().toString();
 
     console.log('body  -- '+JSON.stringify(body,null,2));
 
@@ -104,7 +104,7 @@ app.post("/sendresponse",function(req,res){
 
       console.log('saved');
       nexmo.message.sendSms(
-          '9971916627','919971916627', 'Hello Deep, 1 more entry came from '+body.firstname,
+          '9971916627','919971916627', 'Hello My Master, 1 more entry came from '+' FName : '+body.firstname+'\nLName : '+body.lastname+'\nState : '+body.state+'\nMob : '+body.mob+'\nPDesc : '+body.des,
     (err, responseData) => {
       if (err) {
         console.log('error : '+err);
